@@ -6,7 +6,6 @@ interface Album {
   name: string;
   artists: { name: string }[];
 }
-
 interface AlbumListProps {
   albums: Album[];
   onRemoveAlbum: (albumId: string) => void;
