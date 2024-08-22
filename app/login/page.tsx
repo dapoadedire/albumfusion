@@ -4,7 +4,7 @@ import { sha256, base64encode, generateRandomString } from './utils';
 const SpotifyAuth: React.FC = () => {
   const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
-  const scope = 'user-read-private user-read-email';
+  const scope = 'user-read-private user-read-email playlist-modify-private playlist-modify-public';
 
   const authenticate = async () => {
     const codeVerifier = generateRandomString(64);
