@@ -125,10 +125,8 @@ export default function Home() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: playlistName || "Merged Playlist",
-
-            description:
-              playlistDescription || "A playlist created by Album Merge",
+            name: `${playlistName} by AlbumFusion` || "Merged Playlist",
+            description: `${playlistDescription} - created by AlbumFusion.app` || "A playlist created by AlbumFusion",
             public: publicPlaylist,
           }),
         }
