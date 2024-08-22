@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { DM_Mono } from "next/font/google";
+import { DM_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const dm_mono = DM_Mono({ weight: "400", subsets: ["latin"] });
+const dm_mono = DM_Sans({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AlbumFusion",
