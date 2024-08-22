@@ -18,13 +18,7 @@ const AlbumList: React.FC<AlbumListProps> = ({ albums, onRemoveAlbum }) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-2">Your Album List</h2>
-      <input
-        type="text"
-        value={listName}
-        onChange={(e) => setListName(e.target.value)}
-        placeholder="Enter list name"
-        className="border p-2 mb-2 w-full"
-      />
+     
       <ul>
         {albums.map((album) => (
           <li key={album.id} className="flex justify-between items-center mb-2">
