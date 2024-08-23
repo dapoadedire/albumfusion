@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { DM_Mono, DM_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import ClientProvider from "./ClientProvider"; // We'll create this next
 
-const dm_mono = DM_Sans({ weight: "400", subsets: ["latin"] });
+const dm_sans = DM_Sans({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AlbumFusion",
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={dm_mono.className}>{children}</body>
+      <body className={dm_sans.className}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }

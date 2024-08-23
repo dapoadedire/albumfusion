@@ -1,4 +1,3 @@
-// components/AlbumList.tsx
 import React, { useState } from 'react';
 
 interface Album {
