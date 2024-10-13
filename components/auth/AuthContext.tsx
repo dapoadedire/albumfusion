@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useSearchParams } from "next/navigation";
-import { generateRandomString, base64encode, sha256 } from "../../utils";
+import { generateRandomString, base64encode, sha256 } from "@/utils";
 
 interface AuthContextType {
   accessToken: string | null;
