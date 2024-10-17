@@ -3,6 +3,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { albumSearchSchema } from "@/lib/schema";
+import { searchAlbums } from "@/lib/spotifyApi"; // Using the helper function
+
 type AlbumSearchFormData = z.infer<typeof albumSearchSchema>;
 
 interface Album {
@@ -14,22 +16,13 @@ interface Album {
 }
 
 interface AlbumSearchProps {
-  accessToken: string;
   onAlbumSelect: (album: Album) => void;
 }
 
-interface FilterType {
-  type: "album" | "single" | "all";
-}
-
-const AlbumSearch: React.FC<AlbumSearchProps> = ({
-  accessToken,
-  onAlbumSelect,
-}) => {
+const AlbumSearch: React.FC<AlbumSearchProps> = ({ onAlbumSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<Album[]>([]);
-
 
   const {
     register,
@@ -48,25 +41,7 @@ const AlbumSearch: React.FC<AlbumSearchProps> = ({
     setError(null);
 
     try {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-          formData.searchTerm
-        )}&type=album&limit=${formData.limit}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to search albums");
-      }
-
-      const responseData = await response.json();
-
-      const albums = responseData.albums.items as Album[];
-
+      const albums = await searchAlbums(formData.searchTerm, formData.limit); // Using helper
       setSearchResults(albums);
     } catch (err: any) {
       setError(err.message || "An error occurred while searching.");
