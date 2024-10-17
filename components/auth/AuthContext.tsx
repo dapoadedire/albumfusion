@@ -1,55 +1,65 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+'use client'
+
+import React, { createContext, useState, useEffect, useContext, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { generateRandomString, base64encode, sha256 } from "@/utils";
 
 interface AuthContextType {
   accessToken: string | null;
+  refreshToken: string | null;
   isLoading: boolean;
   error: string | null;
-  authenticate: () => void;
+  authenticate: () => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const searchParams = useSearchParams();
 
-  const scope =
-    "user-read-private user-read-email playlist-modify-private playlist-modify-public";
+  const scope = "user-read-private user-read-email playlist-modify-private playlist-modify-public";
 
-  const authenticate = async () => {
-    const codeVerifier = generateRandomString(64);
-    const hashed = await sha256(codeVerifier);
-    const codeChallenge = base64encode(hashed);
+  const authenticate = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const codeVerifier = generateRandomString(64);
+      const hashed = await sha256(codeVerifier);
+      const codeChallenge = base64encode(hashed);
 
-    localStorage.setItem("code_verifier", codeVerifier);
+      localStorage.setItem("code_verifier", codeVerifier);
 
-    const params = new URLSearchParams({
-      response_type: "code",
-      client_id: clientId!,
-      scope,
-      code_challenge_method: "S256",
-      code_challenge: codeChallenge,
-      redirect_uri: redirectUri!,
-    });
+      const params = new URLSearchParams({
+        response_type: "code",
+        client_id: clientId!,
+        scope,
+        code_challenge_method: "S256",
+        code_challenge: codeChallenge,
+        redirect_uri: redirectUri!,
+      });
 
-    window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
-  };
+      window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
+    } catch (err) {
+      setError("An error occurred while initiating authentication.");
+      setIsLoading(false);
+    }
+  }, [clientId, redirectUri]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     setAccessToken(null);
-  };
+    setRefreshToken(null);
+  }, []);
 
-  const getToken = async (code: string): Promise<void> => {
+  const getToken = useCallback(async (code: string) => {
     const codeVerifier = localStorage.getItem("code_verifier");
     if (!codeVerifier) {
       setError("Code verifier not found in local storage");
@@ -78,37 +88,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         throw new Error("Failed to fetch access token");
       }
 
-      const { access_token } = await response.json();
+      const { access_token, refresh_token } = await response.json();
+
       localStorage.setItem("access_token", access_token);
       setAccessToken(access_token);
-      setError(null);
+
+      if (refresh_token) {
+        localStorage.setItem("refresh_token", refresh_token);
+        setRefreshToken(refresh_token);
+      }
+
       window.history.replaceState({}, document.title, "/");
     } catch (error) {
-      console.error("Error during token retrieval:", error);
-      setError("Failed to retrieve access token");
-      setAccessToken(null);
+      console.error("Error retrieving access token:", error);
+      setError("An error occurred while retrieving access token.");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [clientId, redirectUri]);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAccessToken(token);
-      setIsLoading(false);
-    } else {
-      const code = searchParams.get("code");
-      if (code) {
-        getToken(code);
-      } else {
+    const initializeAuth = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      const storedToken = localStorage.getItem("access_token");
+      if (storedToken) {
+        setAccessToken(storedToken);
         setIsLoading(false);
+      } else {
+        const code = searchParams.get("code");
+        if (code) {
+          await getToken(code);
+        } else {
+          setIsLoading(false);
+        }
       }
-    }
-  }, [searchParams]);
+    };
+
+    initializeAuth();
+  }, [searchParams, getToken]);
 
   const value = {
     accessToken,
+    refreshToken,
     isLoading,
     error,
     authenticate,
@@ -125,3 +148,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export default AuthProvider;
