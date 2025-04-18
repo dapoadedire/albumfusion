@@ -128,7 +128,7 @@ export default function Home() {
             <div className="mt-4 p-4 border border-gray-400 rounded">
               <AlbumSearch onAlbumSelect={handleAlbumSelect} />
             </div>
-            <div className="mt-4 p-4 border border-gray-400 rounded flex flex-col gap-y-10">
+            <div className="mt-4 p-4 border border-gray-400 rounded flex flex-col gap-y-6">
               <PlaylistForm onCreatePlaylist={handleCreatePlaylist} />
               {createPlaylistError && (
                 <p className="text-red-500 mt-2">{createPlaylistError}</p>
