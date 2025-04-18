@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useCallback } from "react";
 import { useAuth } from "@/components/auth/AuthContext";
@@ -20,7 +20,9 @@ export default function Home() {
   const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
   const [playlistUrl, setPlaylistUrl] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
-  const [createPlaylistError, setCreatePlaylistError] = useState<string | null>(null);
+  const [createPlaylistError, setCreatePlaylistError] = useState<string | null>(
+    null
+  );
 
   const handleCopyLink = useCallback(() => {
     if (playlistUrl) {
@@ -61,7 +63,12 @@ export default function Home() {
         }
 
         const user = await SpotifyAPI.getUserProfile();
-        const playlist = await SpotifyAPI.createPlaylist(user.id, name, description, isPublic);
+        const playlist = await SpotifyAPI.createPlaylist(
+          user.id,
+          name,
+          description,
+          isPublic
+        );
 
         await Promise.all(
           selectedAlbums.map(async (album) => {
@@ -74,7 +81,9 @@ export default function Home() {
         setPlaylistUrl(playlist.external_urls.spotify);
       } catch (err) {
         setCreatePlaylistError(
-          err instanceof Error ? err.message : "An error occurred while creating the playlist"
+          err instanceof Error
+            ? err.message
+            : "An error occurred while creating the playlist"
         );
       }
     },
@@ -161,9 +170,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-3xl font-bold mb-4">
-            Welcome to Spotify Playlist Creator
-          </h1>
+          <h1 className="text-3xl font-bold mb-4">Welcome to AlbumFusion</h1>
           <p className="text-lg text-gray-600 mb-8">
             Create playlists with your favorite albums in just a few clicks.
           </p>
