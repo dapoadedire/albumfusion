@@ -37,7 +37,7 @@ NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://localhost:3000
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/albumfusion.git
+   git clone https://github.com/dapoadedire/albumfusion.git
    cd albumfusion
    ```
 
