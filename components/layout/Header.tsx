@@ -93,7 +93,8 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="https://github.com/dapoadedire/albumfusion"
+                  target="_blank"
                   className="text-white hover:text-gray-200 transition duration-200"
                 >
                   About
