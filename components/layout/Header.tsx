@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const Header = () => {
   return (
-    <header className="bg-gradient-to-r from-purple-700 to-blue-500 py-4">
+    <header className="bg-gradient-to-r from-purple-700 to-blue-500 dark:from-purple-900 dark:to-blue-900 py-4">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <div className="relative w-10 h-10 rounded-full bg-white p-1 shadow-md">
@@ -29,26 +30,29 @@ const Header = () => {
           </div>
           <span className="text-white font-bold text-xl">AlbumFusion</span>
         </Link>
-        <nav>
-          <ul className="flex space-x-6">
-            <li>
-              <Link
-                href="/"
-                className="text-white hover:text-gray-200 transition duration-200"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className="text-white hover:text-gray-200 transition duration-200"
-              >
-                About
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex items-center space-x-4">
+          <nav>
+            <ul className="flex space-x-6">
+              <li>
+                <Link
+                  href="/"
+                  className="text-white hover:text-gray-200 transition duration-200"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-white hover:text-gray-200 transition duration-200"
+                >
+                  About
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

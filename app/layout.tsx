@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import ClientProvider from "./ClientProvider";
-import Header from "@/components/layout/Header"; // Import the Header component
+import Header from "@/components/layout/Header";
+import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const dm_sans = DM_Sans({ weight: "400", subsets: ["latin"] });
 
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={dm_sans.className}>
-        <ClientProvider>
-          <Header />
-          {children}
-        </ClientProvider>
+        <ThemeProvider>
+          <ClientProvider>
+            <Header />
+            {children}
+          </ClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

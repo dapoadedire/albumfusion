@@ -125,24 +125,24 @@ export default function Home() {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="mt-4 p-4 border border-gray-400 rounded">
+            <div className="mt-4 p-4 border border-gray-400 dark:border-gray-600 rounded bg-white dark:bg-gray-800">
               <AlbumSearch onAlbumSelect={handleAlbumSelect} />
             </div>
-            <div className="mt-4 p-4 border border-gray-400 rounded flex flex-col gap-y-6">
+            <div className="mt-4 p-4 border border-gray-400 dark:border-gray-600 rounded flex flex-col gap-y-6 bg-white dark:bg-gray-800">
               <PlaylistForm onCreatePlaylist={handleCreatePlaylist} />
               {createPlaylistError && (
                 <p className="text-red-500 mt-2">{createPlaylistError}</p>
               )}
               {playlistUrl && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
-                  <p className="text-lg font-semibold text-gray-800 mb-2">
+                <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md">
+                  <p className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
                     Your playlist has been created:
                   </p>
                   <div className="flex items-center space-x-4">
                     <a
                       href={playlistUrl}
                       target="_blank"
-                      className="text-blue-600 hover:text-blue-800 underline"
+                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
                       rel="noopener noreferrer"
                     >
                       View your playlist on Spotify
@@ -170,8 +170,10 @@ export default function Home() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-3xl font-bold mb-4">Welcome to AlbumFusion</h1>
-          <p className="text-lg text-gray-600 mb-8">
+          <h1 className="text-3xl font-bold mb-4 dark:text-white">
+            Welcome to AlbumFusion
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
             Create playlists with your favorite albums in just a few clicks.
           </p>
           <button
