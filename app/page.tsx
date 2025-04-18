@@ -116,14 +116,6 @@ export default function Home() {
     <main className="container mx-auto p-4">
       {accessToken ? (
         <div>
-          <div className="flex justify-end">
-            <button
-              onClick={logout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-300"
-            >
-              Logout
-            </button>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="mt-4 p-4 border border-gray-400 dark:border-gray-600 rounded bg-white dark:bg-gray-800">
               <AlbumSearch onAlbumSelect={handleAlbumSelect} />
@@ -134,30 +126,106 @@ export default function Home() {
                 <p className="text-red-500 mt-2">{createPlaylistError}</p>
               )}
               {playlistUrl && (
-                <div className="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md">
-                  <p className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                    Your playlist has been created:
-                  </p>
-                  <div className="flex items-center space-x-4">
+                <div className="mt-6 p-6 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 transition-all duration-300">
+                  <div className="flex items-center mb-3">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                    <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                      Your playlist has been created!
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-3 sm:space-y-0">
                     <a
                       href={playlistUrl}
                       target="_blank"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
+                      className="flex items-center justify-center bg-[#1DB954] hover:bg-[#1ed760] text-white py-2.5 px-5 rounded-full shadow-md transition-colors duration-300 font-medium"
                       rel="noopener noreferrer"
+                      aria-label="View your playlist on Spotify"
                     >
-                      View your playlist on Spotify
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.65 14.34c-.19.33-.65.44-.98.24-2.7-1.65-6.08-2.02-10.06-1.1-.35.08-.71-.13-.79-.48-.08-.35.13-.71.48-.79 4.35-1 8.1-.57 11.11 1.24.33.19.44.65.24.98v-.09zm1.23-2.76c-.24.41-.77.55-1.18.31-3.09-1.9-7.8-2.45-11.43-1.34-.47.14-.96-.12-1.1-.59-.14-.47.12-.96.59-1.1 4.15-1.26 9.3-.64 12.8 1.54.41.25.55.77.31 1.18h.01zm.11-2.86c-3.71-2.2-9.82-2.4-13.36-1.33-.57.17-1.16-.15-1.33-.71-.17-.57.15-1.16.71-1.33 4.07-1.23 10.82-1 15.04 1.53.53.31.7 1 .39 1.52-.31.53-1 .7-1.52.39l.07-.07z" />
+                      </svg>
+                      View on Spotify
                     </a>
                     <button
                       onClick={handleCopyLink}
-                      className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded shadow-md transition-colors duration-300"
+                      aria-label="Copy playlist link to clipboard"
+                      className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white py-2.5 px-5 rounded-full shadow-md transition-all duration-300 font-medium"
                     >
-                      {copySuccess ? "Copied!" : "Copy Link"}
+                      {copySuccess ? (
+                        <>
+                          <svg
+                            className="w-5 h-5 mr-2 animate-pulse"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M5 13l4 4L19 7"
+                            ></path>
+                          </svg>
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                            ></path>
+                          </svg>
+                          Copy Link
+                        </>
+                      )}
                     </button>
                   </div>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-4 italic">
+                    Share this playlist with your friends and enjoy your curated
+                    music collection!
+                  </p>
                   {copySuccess && (
-                    <p className="text-green-600 mt-2 text-sm font-medium">
+                    <div className="mt-2 py-1.5 px-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-md text-sm inline-flex items-center animate-fadeIn">
+                      <svg
+                        className="w-4 h-4 mr-1.5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
                       {copySuccess}
-                    </p>
+                    </div>
                   )}
                 </div>
               )}
@@ -170,23 +238,97 @@ export default function Home() {
         </div>
       ) : (
         <>
-          <div className="flex flex-col items-center justify-center min-h-[60vh] py-12 px-4 sm:px-6">
+          <div className="flex flex-col items-center justify-center min-h-[60vh] py-12 pb-4 px-4 sm:px-6">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 dark:from-purple-400 dark:via-indigo-300 dark:to-blue-300">
               Welcome to AlbumFusion
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 text-center max-w-2xl">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 text-center max-w-2xl">
               Create playlists with your favorite albums in just a few clicks.
             </p>
-            <button
-              onClick={() => authenticate()}
-              className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl shadow-md"
-            >
-              Get Started with Spotify
-            </button>
+
+            <div className="flex flex-col items-center">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-green-600 rounded-full blur opacity-60 group-hover:opacity-90 transition duration-500"></div>
+                <button
+                  onClick={() => authenticate()}
+                  className="relative flex items-center gap-2 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl shadow-md"
+                  aria-label="Connect with Spotify"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.65 14.34c-.19.33-.65.44-.98.24-2.7-1.65-6.08-2.02-10.06-1.1-.35.08-.71-.13-.79-.48-.08-.35.13-.71.48-.79 4.35-1 8.1-.57 11.11 1.24.33.19.44.65.24.98v-.09zm1.23-2.76c-.24.41-.77.55-1.18.31-3.09-1.9-7.8-2.45-11.43-1.34-.47.14-.96-.12-1.1-.59-.14-.47.12-.96.59-1.1 4.15-1.26 9.3-.64 12.8 1.54.41.25.55.77.31 1.18h.01zm.11-2.86c-3.71-2.2-9.82-2.4-13.36-1.33-.57.17-1.16-.15-1.33-.71-.17-.57.15-1.16.71-1.33 4.07-1.23 10.82-1 15.04 1.53.53.31.7 1 .39 1.52-.31.53-1 .7-1.52.39l.07-.07z" />
+                  </svg>
+                  Connect with Spotify
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 italic">
+                No Spotify account?{" "}
+                <a
+                  href="https://www.spotify.com/signup"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 font-medium"
+                >
+                  Sign up for free
+                </a>
+              </p>
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-4 justify-center text-center">
+              <div className="flex items-center text-gray-600 dark:text-gray-300">
+                <svg
+                  className="w-5 h-5 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span>Free to use</span>
+              </div>
+              <div className="flex items-center text-gray-600 dark:text-gray-300">
+                <svg
+                  className="w-5 h-5 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span>Secure authentication</span>
+              </div>
+              <div className="flex items-center text-gray-600 dark:text-gray-300">
+                <svg
+                  className="w-5 h-5 mr-2 text-green-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span>Instant playlist creation</span>
+              </div>
+            </div>
           </div>
 
           {/* How It Works Section */}
-          <div className="py-16 px-4 sm:px-6 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-xl my-8 shadow-inner">
+          <div className="py-16 pt-8 px-4 sm:px-6 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-xl my-8 shadow-inner">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
                 How AlbumFusion Works
@@ -240,126 +382,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* Footer */}
-          <footer className="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 px-4 sm:px-0">
-              <div className="flex items-center">
-                <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 p-[2px] shadow-lg">
-                  <div className="bg-white dark:bg-gray-800 rounded-full p-1 w-full h-full">
-                    <svg
-                      viewBox="0 0 100 100"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-full h-full"
-                    >
-                      <path
-                        d="M30 30 L30 70 L50 50 L30 30"
-                        fill="url(#purple-gradient)"
-                      />
-                      <path
-                        d="M55 30 L75 30 L75 70 L55 70 L55 30"
-                        fill="url(#blue-gradient)"
-                      />
-                      <circle
-                        cx="65"
-                        cy="50"
-                        r="10"
-                        fill="white"
-                        opacity="0.3"
-                      />
-                      <defs>
-                        <linearGradient
-                          id="purple-gradient"
-                          x1="30"
-                          y1="30"
-                          x2="50"
-                          y2="70"
-                          gradientUnits="userSpaceOnUse"
-                        >
-                          <stop offset="0%" stopColor="#8B5CF6" />
-                          <stop offset="100%" stopColor="#6D28D9" />
-                        </linearGradient>
-                        <linearGradient
-                          id="blue-gradient"
-                          x1="55"
-                          y1="30"
-                          x2="75"
-                          y2="70"
-                          gradientUnits="userSpaceOnUse"
-                        >
-                          <stop offset="0%" stopColor="#60A5FA" />
-                          <stop offset="100%" stopColor="#3B82F6" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-                <span className="text-gray-800 dark:text-gray-200 font-semibold ml-2 text-lg">
-                  AlbumFusion
-                </span>
-              </div>
-
-              <div className="text-sm text-gray-600 dark:text-gray-400 text-center md:text-left">
-                © {new Date().getFullYear()} AlbumFusion. All rights reserved.
-              </div>
-
-              <div className="flex space-x-6">
-                <a
-                  href="https://github.com/yourusername/albumfusion"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                  aria-label="GitHub"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="https://twitter.com/yourusername"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                  aria-label="Twitter"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-                <a
-                  href="https://spotify.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                  aria-label="Spotify"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.305-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.786-2.13-9.965-1.166a.78.78 0 01-.973-.516.781.781 0 01.517-.972c3.632-1.102 8.147-.568 11.236 1.325a.78.78 0 01.257 1.072zm.105-2.835c-3.222-1.91-8.54-2.09-11.618-1.156a.935.935 0 11-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 11-.955 1.608z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </footer>
         </>
       )}
     </main>

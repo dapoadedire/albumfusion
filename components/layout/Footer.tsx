@@ -22,13 +22,7 @@ const Footer = () => {
                     d="M55 30 L75 30 L75 70 L55 70 L55 30"
                     fill="url(#blue-gradient)"
                   />
-                  <circle
-                    cx="65"
-                    cy="50"
-                    r="10"
-                    fill="white"
-                    opacity="0.3"
-                  />
+                  <circle cx="65" cy="50" r="10" fill="white" opacity="0.3" />
                   <defs>
                     <linearGradient
                       id="purple-gradient"
