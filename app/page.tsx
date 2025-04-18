@@ -376,7 +376,7 @@ export default function Home() {
                   Create Playlist
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Name your playlist, add a description, and we'll create it in
+                  Name your playlist, add a description, and we&apos;ll create it in
                   your Spotify account
                 </p>
               </div>
