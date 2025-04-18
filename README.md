@@ -80,3 +80,10 @@ public/        Static assets (images, gifs)
 ## License
 
 This project is licensed under the MIT License.
+
+
+![localhost_3000_](https://github.com/user-attachments/assets/0462ffbd-32a5-411b-b4d4-39ded81e76fa)
+
+![localhost_300_2](https://github.com/user-attachments/assets/2691fd2f-764f-41fb-add8-0dee15a26380)
+
+![ddce10ce-77f0-4924-af99-2058689620ef](https://github.com/user-attachments/assets/8c00e1eb-0a38-4576-920f-ec5139062020)
