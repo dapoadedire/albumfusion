@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import ClientProvider from "./ClientProvider";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const dm_sans = DM_Sans({ weight: "400", subsets: ["latin"] });
@@ -24,7 +25,12 @@ export default function RootLayout({
         <ThemeProvider>
           <ClientProvider>
             <Header />
-            {children}
+            <div className="min-h-screen flex flex-col">
+              <div className="flex-grow">
+                {children}
+              </div>
+              <Footer />
+            </div>
           </ClientProvider>
         </ThemeProvider>
       </body>
