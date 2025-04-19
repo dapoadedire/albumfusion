@@ -79,13 +79,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://scripts.simpleanalyticscdn.com/latest.js"
-          async
-        />
-      </head>
       <body className={dm_sans.className}>
+        <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+
         <ThemeProvider>
           <ClientProvider>
             <Header />
