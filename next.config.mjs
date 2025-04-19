@@ -4,7 +4,7 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
   images: {
-    domains: ['i.scdn.co'],
+    domains: ["i.scdn.co", "albumfusion.xyz", "albumfusion.vercel.app"],
   },
 };
 
